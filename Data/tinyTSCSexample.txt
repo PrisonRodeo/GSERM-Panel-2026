@@ -1,0 +1,13 @@
+  Firm    Year   Sector  Inflation FemaleCEO  NPM
+   1      2021     IT      0.6        0       21.6
+   1      2022     IT      2.8        0       19.9 
+   1      2023     IT      2.1        0       23.1
+   1      2024     IT      1.1        0       22.0
+   2      2021   Energy    0.6        0       13.7
+   2      2022   Energy    2.8        0       12.1
+   2      2023   Energy    2.1        0       12.3
+   2      2024   Energy    1.1        0       13.0
+   3      2021   Retail    0.6        1        5.1
+   3      2022   Retail    2.8        1        4.9
+   3      2023   Retail    2.1        1        4.8
+   3      2024   Retail    1.1        0        5.0
