@@ -2,7 +2,7 @@
 # Introductory things...                             ####
 #
 # GSERM - St. Gallen (2026)
-#
+# 
 # Analyzing Panel Data
 # Prof. Christopher Zorn
 #
