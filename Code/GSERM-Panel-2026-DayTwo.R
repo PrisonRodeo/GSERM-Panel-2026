@@ -514,8 +514,12 @@ Table5 <- stargazer(FE2,MD,
 
 # Testing:
 
-linearHypothesis(MD,"PGBetween+UPBetween+FRBetween+
-                 GDPBetween+NRRBetween+PCWBetween")
+linearHypothesis(MD,c("PGBetween = 0",
+                      "UPBetween = 0",
+                      "FRBetween = 0",
+                      "GDPBetween = 0",
+                      "NRRBetween = 0",
+                      "PCWBetween = 0"))
 
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # Two-way effects...                                 ####
