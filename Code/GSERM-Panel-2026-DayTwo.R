@@ -521,6 +521,76 @@ linearHypothesis(MD,c("PGBetween = 0",
                       "NRRBetween = 0",
                       "PCWBetween = 0"))
 
+# Mundlak's CREM model...
+#
+# This basically means fitting the same OLS specification as 
+# above, but in a RE model. The same test as last time then
+# becomes a test for the XXX
+#
+# Create "within" variables:
+
+smol$PGWithin  <- smol$PopGrowth - smol$PGBetween
+smol$UPWithin  <- smol$UrbanPopulation - smol$UPBetween
+smol$FRWithin  <- smol$FertilityRate - smol$FRBetween
+smol$GDPWithin <- smol$lnGDPPerCap - smol$GDPBetween
+smol$NRRWithin <- smol$NaturalResourceRents - smol$NRRBetween
+smol$PCWWithin <- smol$PostColdWar - smol$PCWBetween
+
+# Model:
+
+MCREM <- plm(WomenBusLawIndex~PopGrowth+UrbanPopulation+FertilityRate+lnGDPPerCap+NaturalResourceRents+
+               PostColdWar+PGBetween+UPBetween+FRBetween+GDPBetween+NRRBetween+PCWBetween,
+             data=smol,index=c("ISO3","YearNumeric"),effect="individual",model="random",
+             random.method = "walhus")
+
+summary(MCREM)
+
+# Mundlak test:
+
+linearHypothesis(
+  MCREM,
+  c(
+    "PGBetween = 0",
+    "UPBetween = 0",
+    "FRBetween = 0",
+    "GDPBetween = 0",
+    "NRRBetween = 0",
+    "PCWBetween = 0"
+  )
+)
+
+# Create another table with standard RE and CREM models
+# side-by-side...
+#
+# First, re-fit the standard RE model:
+
+RE<-plm(WomenBusLawIndex~PopGrowth+UrbanPopulation+FertilityRate+lnGDPPerCap+NaturalResourceRents+
+          PostColdWar,data=smol,effect="individual",model="random")
+
+# summary(RE)
+#
+# Now, a table:
+
+Table6 <- stargazer(RE,MCREM,
+                    title="Random Effects and Mundlak's CREM",
+                    column.separate=c(1,1,1,1),align=TRUE,
+                    dep.var.labels.include=FALSE,
+                    dep.var.caption="",
+                    covariate.labels=c("Population Growth","Urban Population",
+                                       "Fertility Rate","ln(GDP Per Capita)",
+                                       "Natural Resource Rents",
+                                       "Post-Cold War",
+                                       "Between-Country Population Growth",
+                                       "Between-Country Urban Population",
+                                       "Between-Country Fertility Rate",
+                                       "Between-Country ln(GDP Per Capita)",
+                                       "Between-Country Nat. Resource Rents",
+                                       "Between-Country Post-Cold War"),
+                    header=FALSE,model.names=FALSE,
+                    model.numbers=FALSE,multicolumn=FALSE,
+                    object.names=TRUE,notes.label="",
+                    out="Mundlak-2-26.tex")
+
 #=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=-=
 # Two-way effects...                                 ####
 #
